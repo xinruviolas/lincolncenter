@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lincoln Center App — Product Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #B02471;
+    --pink-light: #F7EAF2;
+    --pink-mid: #D4639A;
+    --black: #111111;
+    --white: #FFFFFF;
+    --gray-100: #F5F4F2;
+    --gray-200: #ECEAE5;
+    --gray-300: #D8D5CE;
+    --gray-400: #B0ADA5;
+    --gray-600: #6B6860;
+    --gray-800: #3A3835;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Karla', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--white); border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 56px;
+  }
+  .nav-logo { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--black); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 13px; color: var(--gray-600); text-decoration: none; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--pink); }
+  html { scroll-padding-top: 56px; }
+
+  /* HERO */
+  .hero {
+    padding: 140px 40px 80px;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 52px; font-weight: 700; line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 24px; color: var(--black);
+  }
+  .hero h1 span { color: var(--pink); }
+  .hero-desc { font-size: 17px; color: var(--gray-600); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
+  .hero-meta { display: flex; gap: 32px; }
+  .meta-item { }
+  .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+  .meta-value { font-size: 14px; font-weight: 500; color: var(--black); }
+  .hero-visual {
+    display: flex; gap: 16px; justify-content: center; align-items: flex-end;
+  }
+  .hero-phone-thumb {
+    width: 110px; background: var(--gray-100); border-radius: 20px;
+    border: 1px solid var(--gray-200); overflow: hidden; flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .hero-phone-thumb:hover { transform: translateY(-6px); }
+  .hero-phone-thumb.tall { height: 210px; }
+  .hero-phone-thumb.short { height: 180px; margin-bottom: 16px; }
+  .thumb-bar { height: 6px; background: var(--pink); }
+  .thumb-content { padding: 10px 10px 0; }
+  .thumb-line { height: 7px; border-radius: 3px; background: var(--gray-200); margin-bottom: 6px; }
+  .thumb-line.w80 { width: 80%; }
+  .thumb-line.w60 { width: 60%; }
+  .thumb-line.w40 { width: 40%; }
+  .thumb-card { background: var(--white); border-radius: 8px; padding: 8px; margin-bottom: 6px; border: 1px solid var(--gray-200); }
+  .thumb-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--pink); margin-right: 4px; }
+  .thumb-btn { height: 20px; border-radius: 5px; background: var(--pink); margin-top: 6px; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--gray-200); max-width: 1100px; margin: 0 auto; }
+
+  /* SECTION */
+  section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 16px;
+  }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px; }
+  h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+  .lead { font-size: 18px; color: var(--gray-600); line-height: 1.7; max-width: 640px; margin-bottom: 48px; }
+
+  /* PROBLEM CARDS */
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-200); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; }
+  .problem-card { background: var(--white); padding: 32px 28px; }
+  .problem-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--pink); margin-bottom: 16px; }
+  .problem-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .problem-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+  /* USER SEGMENTS */
+  .segment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .segment-card {
+    border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .segment-card:hover { border-color: var(--pink); transform: translateY(-3px); }
+  .segment-icon { font-size: 28px; margin-bottom: 16px; }
+  .segment-card h3 { font-size: 16px; margin-bottom: 4px; }
+  .segment-age { font-size: 12px; color: var(--pink); font-weight: 600; margin-bottom: 12px; }
+  .segment-card p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+  .segment-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .stag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--gray-100); color: var(--gray-800); font-weight: 500; }
+
+  /* SCREENS SHOWCASE */
+  .screens-intro { margin-bottom: 60px; }
+  .screen-tabs { display: flex; gap: 0; margin-bottom: 48px; border-bottom: 1px solid var(--gray-200); }
+  .screen-tab {
+    padding: 14px 28px; font-size: 14px; font-weight: 500; color: var(--gray-600);
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+  }
+  .screen-tab:hover { color: var(--black); }
+  .screen-tab.active { color: var(--pink); border-bottom-color: var(--pink); }
+  .screen-panel { display: none; }
+  .screen-panel.active { display: grid; grid-template-columns: 260px 1fr; gap: 60px; align-items: start; }
+  .phone-frame {
+    width: 260px; background: var(--white); border-radius: 36px;
+    border: 1.5px solid var(--gray-300); overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.10);
+    flex-shrink: 0;
+  }
+  .phone-notch { height: 24px; background: var(--black); display: flex; align-items: center; justify-content: center; }
+  .phone-notch-pill { width: 56px; height: 7px; background: rgba(255,255,255,0.15); border-radius: 4px; }
+  .phone-status { background: var(--black); color: rgba(255,255,255,0.7); font-size: 9px; padding: 3px 14px 6px; display: flex; justify-content: space-between; font-family: 'Karla', sans-serif; }
+  .phone-screen { overflow: hidden; }
+  .screen-desc { padding: 8px 0; }
+  .screen-desc h3 { font-size: 26px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.3px; }
+  .screen-desc > p { font-size: 16px; color: var(--gray-600); line-height: 1.7; margin-bottom: 28px; }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .feature-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--gray-800); line-height: 1.5; }
+  .feature-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pink); flex-shrink: 0; margin-top: 6px; }
+
+  /* PHONE SCREEN INTERNALS */
+  .pheader { background: var(--black); color: white; padding: 10px 14px 12px; font-family: 'Karla', sans-serif; }
+  .pheader-title { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+  .pheader-sub { font-size: 9px; opacity: 0.5; letter-spacing: 0.3px; }
+  .psearch { margin: 0 0 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; display: flex; gap: 7px; align-items: center; }
+  .psearch span { font-size: 10px; color: rgba(255,255,255,0.45); font-family: 'Karla', sans-serif; }
+  .pfilters { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
+  .pfilters::-webkit-scrollbar { display: none; }
+  .pfil { font-size: 9px; padding: 4px 9px; border-radius: 20px; white-space: nowrap; font-family: 'Karla', sans-serif; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); cursor: pointer; flex-shrink: 0; }
+  .pfil.active { background: var(--pink); border-color: var(--pink); color: white; }
+  .pbody { background: var(--gray-100); overflow-y: auto; max-height: 380px; }
+  .pbody::-webkit-scrollbar { display: none; }
+  .psaved { display: flex; align-items: center; gap: 5px; padding: 8px 12px 4px; }
+  .psaved-label { font-size: 9px; color: var(--gray-600); font-family: 'Karla', sans-serif; }
+  .pchip { font-size: 9px; padding: 3px 8px; border-radius: 4px; background: var(--pink-light); color: var(--pink); font-weight: 600; font-family: 'Karla', sans-serif; cursor: pointer; }
+  .ptonight-card { margin: 8px 10px; background: var(--black); border-radius: 12px; padding: 12px; color: white; position: relative; overflow: hidden; }
+  .ptonight-card::after { content: ''; position: absolute; right: -15px; top: -15px; width: 80px; height: 80px; border-radius: 50%; background: rgba(176,36,113,0.25); }
+  .ptonight-label { font-size: 8px; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 4px; font-family: 'Karla', sans-serif; }
+  .ptonight-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; font-family: 'Karla', sans-serif; }
+  .ptonight-sub { font-size: 9px; opacity: 0.65; margin-bottom: 10px; font-family: 'Karla', sans-serif; }
+  .ptonight-time { position: absolute; right: 14px; top: 12px; font-size: 11px; font-weight: 600; opacity: 0.8; font-family: 'Karla', sans-serif; }
+  .ptonight-btn { display: inline-block; font-size: 9px; padding: 5px 12px; border-radius: 6px; background: white; color: var(--black); font-weight: 700; font-family: 'Karla', sans-serif; cursor: pointer; }
+  .psection { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-400); padding: 10px 12px 5px; font-family: 'Karla', sans-serif; }
+  .pcard { background: white; margin: 0 10px 7px; border-radius: 10px; border: 1px solid var(--gray-200); padding: 10px 12px; }
+  .pcard-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .pcard-title { font-size: 11.5px; font-weight: 700; color: var(--black); line-height: 1.3; font-family: 'Karla', sans-serif; }
+  .pcard-venue { font-size: 9px; color: var(--gray-600); margin-top: 2px; font-family: 'Karla', sans-serif; }
+  .pcard-time { font-size: 10px; font-weight: 600; color: var(--pink); white-space: nowrap; font-family: 'Karla', sans-serif; }
+  .pcard-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 7px; }
+  .ptag { font-size: 8px; padding: 2px 7px; border-radius: 10px; font-weight: 600; font-family: 'Karla', sans-serif; }
+  .ptag-pink { background: var(--pink-light); color: var(--pink); }
+  .ptag-dark { background: var(--gray-100); color: var(--gray-800); }
+  .ptag-lottery { background: #fff3e0; color: #bf6000; border: 1px solid #ffd54f; }
+  .ptag-free { background: #e8f5e9; color: #2e7d32; }
+  .ptag-exclusive { background: #f3e5f5; color: #6a1b9a; }
+  .pfriends { font-size: 8.5px; color: var(--gray-600); margin-top: 5px; display: flex; align-items: center; gap: 4px; font-family: 'Karla', sans-serif; }
+  .pavatar { width: 14px; height: 14px; border-radius: 50%; background: var(--pink); color: white; font-size: 6.5px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Karla', sans-serif; }
+  .pcard-actions { display: flex; gap: 5px; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--gray-200); }
+  .pbtn { flex: 1; text-align: center; font-size: 9px; padding: 6px 4px; border-radius: 6px; cursor: pointer; font-weight: 700; font-family: 'Karla', sans-serif; transition: opacity 0.15s; }
+  .pbtn:hover { opacity: 0.85; }
+  .pbtn-pink { background: var(--pink); color: white; }
+  .pbtn-lottery { background: #fff3e0; color: #bf6000; border: 1px solid #ffd54f; }
+  .pbtn-ghost { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+  .pnav { display: flex; background: white; border-top: 1px solid var(--gray-200); padding: 7px 0 10px; }
+  .pnav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+  .pnav-icon { font-size: 15px; }
+  .pnav-label { font-size: 8px; color: var(--gray-400); font-family: 'Karla', sans-serif; }
+  .pnav-item.active .pnav-label { color: var(--pink); font-weight: 700; }
+
+  /* CALENDAR SCREEN */
+  .pcal-header { background: var(--black); color: white; padding: 10px 14px; font-family: 'Karla', sans-serif; }
+  .pcal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .pcal-month { font-size: 15px; font-weight: 700; }
+  .pcal-arrow { font-size: 18px; opacity: 0.5; cursor: pointer; }
+  .pcal-wdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+  .pcal-wd { font-size: 8px; opacity: 0.45; padding: 2px 0; font-family: 'Karla', sans-serif; }
+  .pcal-days { display: grid; grid-template-columns: repeat(7, 1fr); background: white; }
+  .pcal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-family: 'Karla', sans-serif; border-right: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); position: relative; cursor: pointer; color: var(--black); }
+  .pcal-day.other { color: var(--gray-300); }
+  .pcal-day.today { font-weight: 700; color: var(--pink); }
+  .pcal-day.today .daynum::before { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background: var(--pink-light); left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0; }
+  .daynum { position: relative; z-index: 1; }
+  .cdots { display: flex; gap: 2px; margin-top: 1px; }
+  .cdot { width: 4px; height: 4px; border-radius: 50%; }
+  .cdot-pink { background: var(--pink); }
+  .cdot-interest { background: #E8A0C0; }
+  .cdot-black { background: var(--black); }
+  .cdot-gray { background: var(--gray-400); }
+  .pcal-legend { display: flex; gap: 8px; padding: 6px 10px; background: white; border-bottom: 1px solid var(--gray-200); flex-wrap: wrap; }
+  .cleg { display: flex; align-items: center; gap: 3px; font-size: 8px; color: var(--gray-600); font-family: 'Karla', sans-serif; }
+  .pcal-list { background: var(--gray-100); padding: 0 10px; }
+  .pcal-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--gray-200); }
+  .pcal-dot-side { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pcal-date { font-size: 9px; color: var(--gray-600); white-space: nowrap; min-width: 36px; font-family: 'Karla', sans-serif; }
+  .pcal-ev-title { font-size: 10px; font-weight: 600; flex: 1; font-family: 'Karla', sans-serif; color: var(--black); }
+  .pcal-tag { font-size: 8px; padding: 2px 5px; border-radius: 8px; white-space: nowrap; font-family: 'Karla', sans-serif; }
+
+  /* MY TICKETS SCREEN */
+  .ptix-tabs { display: flex; gap: 1px; margin: 8px 10px; background: var(--gray-200); border-radius: 8px; padding: 2px; }
+  .ptix-tab { flex: 1; text-align: center; font-size: 9.5px; padding: 5px 2px; border-radius: 6px; color: var(--gray-600); cursor: pointer; font-family: 'Karla', sans-serif; font-weight: 500; }
+  .ptix-tab.active { background: white; color: var(--pink); font-weight: 700; }
+  .ptix-card { background: white; margin: 0 10px 7px; border-radius: 10px; border: 1px solid var(--gray-200); overflow: hidden; }
+  .ptix-top { display: flex; padding: 10px 12px; gap: 10px; }
+  .ptix-bar { width: 3px; border-radius: 3px; flex-shrink: 0; }
+  .ptix-info { flex: 1; }
+  .ptix-title { font-size: 12px; font-weight: 700; font-family: 'Karla', sans-serif; color: var(--black); }
+  .ptix-date { font-size: 9px; color: var(--gray-600); margin-top: 2px; font-family: 'Karla', sans-serif; }
+  .ptix-badges { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+  .ptix-status { font-size: 8px; padding: 2px 7px; border-radius: 8px; font-weight: 700; font-family: 'Karla', sans-serif; }
+  .ptix-attending { background: #e8f5e9; color: #2e7d32; }
+  .ptix-lottery { background: #fff3e0; color: #bf6000; }
+  .ptix-past { background: var(--gray-100); color: var(--gray-600); }
+  .ptix-qr-area { padding: 0 12px 10px; display: flex; gap: 10px; align-items: center; }
+  .ptix-qr { width: 40px; height: 40px; border: 1px solid var(--gray-200); border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 4px; flex-shrink: 0; }
+  .qrb { background: var(--black); border-radius: 1px; }
+  .qrb.empty { background: transparent; }
+  .ptix-actions { display: flex; gap: 5px; flex: 1; }
+  .ptix-btn { flex: 1; text-align: center; font-size: 8.5px; padding: 6px 3px; border-radius: 6px; cursor: pointer; font-weight: 700; font-family: 'Karla', sans-serif; }
+  .ptix-btn-pink { background: var(--pink); color: white; }
+  .ptix-btn-ghost { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+
+  /* ME SCREEN */
+  .pme-header { background: var(--black); padding: 14px; color: white; display: flex; align-items: center; gap: 12px; font-family: 'Karla', sans-serif; }
+  .pme-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; }
+  .pme-name { font-size: 15px; font-weight: 700; }
+  .pme-member { font-size: 9px; opacity: 0.55; margin-top: 1px; }
+  .pme-section { font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray-400); padding: 10px 12px 4px; font-family: 'Karla', sans-serif; }
+  .pme-row { background: white; margin: 0 10px 2px; border-radius: 7px; padding: 9px 11px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--gray-200); }
+  .pme-label { font-size: 11px; color: var(--black); font-family: 'Karla', sans-serif; font-weight: 500; }
+  .pme-val { font-size: 10px; color: var(--gray-600); font-family: 'Karla', sans-serif; }
+  .pme-badge { font-size: 8px; padding: 2px 7px; border-radius: 8px; font-weight: 700; font-family: 'Karla', sans-serif; }
+  .pme-verified { background: #e8f5e9; color: #2e7d32; }
+  .pme-pending { background: #fff3e0; color: #bf6000; }
+  .programs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 0 10px 8px; }
+  .prog-card { border-radius: 8px; padding: 10px; border: 1px solid var(--gray-200); cursor: pointer; transition: all 0.2s; }
+  .prog-card:hover { border-color: var(--pink); }
+  .prog-card.active { background: var(--pink); border-color: var(--pink); }
+  .prog-card.inactive { background: white; }
+  .prog-card-title { font-size: 10px; font-weight: 700; font-family: 'Karla', sans-serif; }
+  .prog-card-sub { font-size: 8px; margin-top: 2px; font-family: 'Karla', sans-serif; }
+  .prog-card.active .prog-card-title { color: white; }
+  .prog-card.active .prog-card-sub { color: rgba(255,255,255,0.65); }
+  .prog-card.inactive .prog-card-title { color: var(--black); }
+  .prog-card.inactive .prog-card-sub { color: var(--gray-600); }
+
+  /* PRIORITY SECTION */
+  .priority-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .priority-card { border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px 24px; transition: border-color 0.2s; }
+  .priority-card:hover { border-color: var(--pink); }
+  .priority-num { font-size: 42px; font-weight: 700; color: var(--gray-200); line-height: 1; margin-bottom: 12px; }
+  .priority-card h3 { font-size: 17px; margin-bottom: 8px; }
+  .priority-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; margin-top: 40px; }
+  .metric-card { background: white; padding: 28px 24px; }
+  .metric-num { font-size: 36px; font-weight: 700; color: var(--pink); line-height: 1; margin-bottom: 6px; }
+  .metric-label { font-size: 13px; color: var(--gray-600); }
+
+  /* ROADMAP */
+  .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .roadmap-card { border-top: 2px solid var(--gray-200); padding-top: 20px; transition: border-color 0.2s; }
+  .roadmap-card:hover { border-top-color: var(--pink); }
+  .roadmap-card.highlight { border-top-color: var(--pink); }
+  .roadmap-phase { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pink); margin-bottom: 8px; }
+  .roadmap-card h3 { font-size: 16px; margin-bottom: 4px; }
+  .roadmap-time { font-size: 12px; color: var(--gray-400); margin-bottom: 12px; }
+  .roadmap-card p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--black); color: white; padding: 80px 40px;
+    text-align: center;
+  }
+  .cta-section h2 { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .cta-section p { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto 40px; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-cta {
+    padding: 16px 32px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'Karla', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-cta-pink { background: var(--pink); color: white; }
+  .btn-cta-pink:hover { background: #9a1f63; }
+  .btn-cta-ghost { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.25); }
+  .btn-cta-ghost:hover { background: rgba(255,255,255,0.08); }
+
+  /* FOOTER */
+  footer { padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gray-200); }
+  .footer-left { font-size: 13px; color: var(--gray-400); }
+  .footer-right { font-size: 13px; color: var(--pink); font-weight: 600; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .problem-story-grid { grid-template-columns: 1fr !important; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 120px 24px 60px; }
+    .hero-visual { justify-content: flex-start; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .segment-grid { grid-template-columns: 1fr 1fr; }
+    .screen-panel.active { grid-template-columns: 1fr; }
+    .phone-frame { width: 100%; max-width: 300px; margin: 0 auto; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .priority-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 24px; }
+    section { padding: 60px 24px; }
+    h2 { font-size: 28px; }
+    .hero h1 { font-size: 36px; }
+  }
+  @media (max-width: 600px) {
+    .segment-grid { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Lincoln Center App</div>
+  <div class="nav-links">
+    <a href="javascript:void(0)" onclick="navScrollTo('problem')">Problem</a>
+    <a href="javascript:void(0)" onclick="navScrollTo('screens')">Screens</a>
+    <a href="javascript:void(0)" onclick="navScrollTo('contact')">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Product Case Study</div>
+    <h1>Making Lincoln Center for <span>everyone.</span></h1>
+    <p class="hero-desc">A mobile app concept that removes the friction keeping young, budget-conscious New Yorkers from experiencing the performing arts.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Product Strategy</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Type</div>
+        <div class="meta-value">Concept / Speculative</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Year</div>
+        <div class="meta-value">2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-phone-thumb tall">
+      <div class="thumb-bar"></div>
+      <div class="thumb-content">
+        <div class="thumb-line w60"></div>
+        <div class="thumb-line w80"></div>
+        <div class="thumb-card">
+          <div class="thumb-dot"></div>
+          <div class="thumb-line w80" style="margin:4px 0 3px;height:5px;"></div>
+          <div class="thumb-line w60" style="height:5px;"></div>
+          <div class="thumb-btn"></div>
+        </div>
+        <div class="thumb-card">
+          <div class="thumb-line w80" style="height:5px;margin-bottom:3px;"></div>
+          <div class="thumb-line w40" style="height:5px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-phone-thumb short">
+      <div class="thumb-bar" style="background:var(--black);"></div>
+      <div class="thumb-content">
+        <div class="thumb-line w60" style="margin-bottom:8px;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px;margin-bottom:6px;">
+          <div style="height:20px;border-radius:2px;background:var(--gray-200);"></div>
+          <div style="height:20px;border-radius:2px;background:var(--gray-200);"></div>
+          <div style="height:20px;border-radius:2px;background:var(--pink);"></div>
+          <div style="height:20px;border-radius:2px;background:var(--gray-200);"></div>
+        </div>
+        <div class="thumb-line w80" style="height:5px;"></div>
+        <div class="thumb-line w40" style="height:5px;"></div>
+      </div>
+    </div>
+    <div class="hero-phone-thumb tall" style="height:230px;">
+      <div class="thumb-bar" style="background:var(--black);"></div>
+      <div class="thumb-content">
+        <div class="thumb-line w40" style="margin-bottom:4px;"></div>
+        <div style="display:flex;gap:3px;margin-bottom:7px;">
+          <div style="height:16px;border-radius:3px;background:var(--pink);width:40%;"></div>
+          <div style="height:16px;border-radius:3px;background:var(--gray-200);width:30%;"></div>
+          <div style="height:16px;border-radius:3px;background:var(--gray-200);flex:1;"></div>
+        </div>
+        <div class="thumb-card">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:4px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--pink);flex-shrink:0;"></div>
+            <div class="thumb-line w80" style="height:5px;margin-bottom:0;"></div>
+          </div>
+          <div class="thumb-line w60" style="height:5px;"></div>
+        </div>
+        <div class="thumb-card">
+          <div class="thumb-line w80" style="height:5px;margin-bottom:3px;"></div>
+          <div class="thumb-line w40" style="height:5px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;"><div class="divider"></div></div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">The Problem</div>
+  <h2>Lincoln Center is invisible to an entire generation.</h2>
+  <p class="lead">Young New Yorkers don't skip Lincoln Center because they don't care about the arts. They skip it because every step of the path — from discovery to purchase to arrival — feels like it wasn't designed for them.</p>
+
+  <div class="problem-story-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:56px;align-items:start;">
+    <div style="border-left:3px solid var(--pink);padding-left:28px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:16px;">A first-hand account</p>
+      <p style="font-size:17px;line-height:1.75;color:var(--black);margin-bottom:20px;">I'm a tech worker and arts lover. Last year I mentioned to a coworker I was seeing <em>The Tales of Hoffmann</em> — he asked if he could come, someone overheard, and ten minutes later I was ordering group tickets for six people who'd never been to the opera.</p>
+      <p style="font-size:17px;line-height:1.75;font-weight:600;color:var(--black);">Young people aren't unwilling. They just need someone to make it easy.</p>
+    </div>
+    <div style="background:var(--gray-100);border-radius:16px;padding:32px 28px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-400);margin-bottom:20px;">What's actually stopping them</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--pink-light);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">$</div>
+          <div><p style="font-size:14px;font-weight:600;margin-bottom:3px;">"It's going to cost hundreds of dollars"</p><p style="font-size:13px;color:var(--gray-600);line-height:1.5;">Price anxiety sets in before anyone even checks. The assumption alone closes the door.</p></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--pink-light);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">&#9990;</div>
+          <div><p style="font-size:14px;font-weight:600;margin-bottom:3px;">"I'd have to call someone or go in person"</p><p style="font-size:13px;color:var(--gray-600);line-height:1.5;">A generation that does everything on a phone draws a hard line at picking up the actual phone.</p></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--pink-light);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">&#8645;</div>
+          <div><p style="font-size:14px;font-weight:600;margin-bottom:3px;">"Buying online is still a whole thing"</p><p style="font-size:13px;color:var(--gray-600);line-height:1.5;">Which show? Which seats? The ticket websites weren't built for a quick impulse buy on your phone.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-num">01 — Time</div>
+      <h3>Too much friction</h3>
+      <p>Figuring out what's playing, whether it's for you, and how to get there takes real effort. The app must answer "what should I see tonight?" in under 60 seconds.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02 — Money</div>
+      <h3>Feels out of reach</h3>
+      <p>Most young attendees rule Lincoln Center out before even checking prices. We need affordable entry points that feel winnable — not like a consolation prize.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03 — Social</div>
+      <h3>"If my friends go, I'll go"</h3>
+      <p>Young audiences are socially motivated. Without group coordination tools and social proof, even interested users won't show up alone. Going together needs to be easy.</p>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:1100px;margin:0 auto;"><div class="divider"></div></div>
+
+<!-- SCREENS -->
+<section id="screens">
+  <div class="section-label">The App</div>
+  <h2>Four screens. One cohesive experience.</h2>
+  <p class="lead">The app is built around getting someone from "I'm free tonight" to "I'm going" as fast as possible — with the infrastructure to grow that relationship over time.</p>
+
+  <div class="screen-tabs">
+    <div class="screen-tab active">Upcoming</div>
+    <div class="screen-tab">Calendar</div>
+    <div class="screen-tab">My Tickets</div>
+    <div class="screen-tab">Me</div>
+  </div>
+
+  <!-- UPCOMING -->
+  <div id="screen-upcoming" class="screen-panel active">
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+      <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+      <div class="phone-screen">
+        <div class="pheader">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+            <div>
+              <div style="font-size:9px;opacity:0.45;letter-spacing:0.3px;font-family:'Karla',sans-serif;">Mon, Apr 27</div>
+              <div class="pheader-title">Upcoming</div>
+            </div>
+            <div style="font-size:14px;opacity:0.5;margin-top:4px;">🔔</div>
+          </div>
+          <div class="psearch">
+            <span style="opacity:0.5;">🔍</span>
+            <span>Search shows, artists, venues...</span>
+          </div>
+          <div class="pfilters" style="margin-top:6px;">
+            <div class="pfil active">Today</div>
+            <div class="pfil">This week</div>
+            <div class="pfil">Free 🟢</div>
+            <div class="pfil">Lottery 🎟</div>
+            <div class="pfil">Under $30</div>
+            <div class="pfil">Casual 🎶</div>
+            <div class="pfil">Fancy ✨</div>
+            <div class="pfil">Under 30s</div>
+            <div class="pfil">Exclusive 💎</div>
+          </div>
+        </div>
+        <div class="pbody">
+          <div class="psaved">
+            <span class="psaved-label">Saved:</span>
+            <div class="pchip">♥ My usual</div>
+            <div class="pchip">👥 Friends interested</div>
+            <div class="pchip">💸 Budget night</div>
+          </div>
+          <div class="ptonight-card">
+            <div class="ptonight-time">7:30 PM</div>
+            <div class="ptonight-label">🎭 Your ticket tonight</div>
+            <div class="ptonight-title">Ragtime</div>
+            <div class="ptonight-sub">Vivian Beaumont · Row J, Seats 4–5</div>
+            <div class="ptonight-btn">View tickets →</div>
+          </div>
+          <div class="psection">Today · Apr 27</div>
+          <div class="pcard">
+            <div class="pcard-top">
+              <div>
+                <div class="pcard-title">Turandot</div>
+                <div class="pcard-venue">Metropolitan Opera House</div>
+              </div>
+              <div class="pcard-time">7:00 PM</div>
+            </div>
+            <div class="pcard-tags">
+              <div class="ptag ptag-lottery">🎟 Lottery open</div>
+              <div class="ptag ptag-dark">✨✨✨ Black tie</div>
+              <div class="ptag ptag-pink">Opera</div>
+              <div class="ptag ptag-dark">$15–$350</div>
+            </div>
+            <div class="pfriends"><div class="pavatar">S</div><div class="pavatar">M</div><span style="margin-left:2px;">Sofia & Marcus also entered</span></div>
+            <div class="pcard-actions">
+              <div class="pbtn pbtn-lottery">Enter lottery</div>
+              <div class="pbtn pbtn-pink">Get tickets</div>
+              <div class="pbtn pbtn-ghost">♡</div>
+            </div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-top">
+              <div>
+                <div class="pcard-title">Ingrid Michaelson: Tied Together</div>
+                <div class="pcard-venue">David Geffen Hall</div>
+              </div>
+              <div class="pcard-time">8:00 PM</div>
+            </div>
+            <div class="pcard-tags">
+              <div class="ptag ptag-pink">Concert</div>
+              <div class="ptag ptag-dark">✨✨ Smart casual</div>
+              <div class="ptag ptag-dark">$45–$120</div>
+            </div>
+            <div class="pfriends"><div class="pavatar">J</div><span style="margin-left:2px;">Jamie interested</span></div>
+            <div class="pcard-actions">
+              <div class="pbtn pbtn-pink" style="flex:2;">Get tickets</div>
+              <div class="pbtn pbtn-ghost">♡</div>
+            </div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-top">
+              <div>
+                <div class="pcard-title">¡VAYA! Sounds of San Juan Hill</div>
+                <div class="pcard-venue">David Rubenstein Atrium</div>
+              </div>
+              <div class="pcard-time">7:30 PM</div>
+            </div>
+            <div class="pcard-tags">
+              <div class="ptag ptag-free">🟢 Free</div>
+              <div class="ptag ptag-dark">✨ Come as you are</div>
+              <div class="ptag ptag-pink">Festival</div>
+            </div>
+            <div class="pcard-actions">
+              <div class="pbtn pbtn-pink" style="flex:2;">Reserve spot</div>
+              <div class="pbtn pbtn-ghost">♡</div>
+            </div>
+          </div>
+          <div class="psection">Tomorrow · Apr 28</div>
+          <div class="pcard">
+            <div class="pcard-top">
+              <div>
+                <div class="pcard-title">El Último Sueño de Frida y Diego</div>
+                <div class="pcard-venue">Metropolitan Opera House</div>
+              </div>
+              <div class="pcard-time">7:30 PM</div>
+            </div>
+            <div class="pcard-tags">
+              <div class="ptag ptag-exclusive">💎 Under 40s Mixer</div>
+              <div class="ptag ptag-pink">Opera</div>
+              <div class="ptag ptag-dark">$30–$180</div>
+            </div>
+            <div class="pcard-actions">
+              <div class="pbtn pbtn-pink" style="flex:2;">Get tickets</div>
+              <div class="pbtn pbtn-ghost">♡</div>
+            </div>
+          </div>
+          <div style="height:14px;"></div>
+        </div>
+        <div class="pnav">
+          <div class="pnav-item active"><div class="pnav-icon">📅</div><div class="pnav-label">Upcoming</div></div>
+          <div class="pnav-item"><div class="pnav-icon">📆</div><div class="pnav-label">Calendar</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🎟</div><div class="pnav-label">My Tickets</div></div>
+          <div class="pnav-item"><div class="pnav-icon">👤</div><div class="pnav-label">Me</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-desc">
+      <h3>Upcoming</h3>
+      <p>The answer to "what's on tonight?" — fast, filtered, and friend-aware. A persistent search bar and scrollable filter pills let users dial in their exact context: budget, vibe, age program, or availability. Saved filter presets mean returning users are one tap from their personalized feed.</p>
+      <ul class="feature-list">
+        <li>Tonight's ticket surfaces as a prominent hero card at the top of the feed — never buried</li>
+        <li>Filter by cost, fanciness scale (come as you are → black tie), lottery availability, free events, and exclusive programs like Under 30s and Gala</li>
+        <li>Save custom filter combinations (e.g. "Budget night out") for one-tap access</li>
+        <li>Friend interest indicators appear inline on show cards — social proof without leaving the feed</li>
+        <li>Real Lincoln Center shows: Turandot, Ingrid Michaelson at Geffen, ¡VAYA! festival, El Último Sueño with Under 40s Mixer</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="screen-calendar" class="screen-panel">
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+      <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+      <div class="phone-screen">
+        <div class="pcal-header">
+          <div class="pcal-nav">
+            <div class="pcal-arrow">‹</div>
+            <div class="pcal-month">April 2026</div>
+            <div class="pcal-arrow">›</div>
+          </div>
+          <div class="pcal-wdays">
+            <div class="pcal-wd">S</div><div class="pcal-wd">M</div><div class="pcal-wd">T</div><div class="pcal-wd">W</div><div class="pcal-wd">T</div><div class="pcal-wd">F</div><div class="pcal-wd">S</div>
+          </div>
+        </div>
+        <div class="pcal-days">
+          <div class="pcal-day other"><span class="daynum">29</span></div><div class="pcal-day other"><span class="daynum">30</span></div><div class="pcal-day other"><span class="daynum">31</span></div><div class="pcal-day"><span class="daynum">1</span></div><div class="pcal-day"><span class="daynum">2</span></div><div class="pcal-day"><span class="daynum">3</span><div class="cdots"><div class="cdot cdot-gray"></div></div></div><div class="pcal-day"><span class="daynum">4</span></div>
+          <div class="pcal-day"><span class="daynum">5</span></div><div class="pcal-day"><span class="daynum">6</span></div><div class="pcal-day"><span class="daynum">7</span><div class="cdots"><div class="cdot cdot-gray"></div></div></div><div class="pcal-day"><span class="daynum">8</span></div><div class="pcal-day"><span class="daynum">9</span><div class="cdots"><div class="cdot cdot-pink"></div></div></div><div class="pcal-day"><span class="daynum">10</span></div><div class="pcal-day"><span class="daynum">11</span><div class="cdots"><div class="cdot cdot-interest"></div></div></div>
+          <div class="pcal-day"><span class="daynum">12</span></div><div class="pcal-day"><span class="daynum">13</span><div class="cdots"><div class="cdot cdot-black"></div></div></div><div class="pcal-day"><span class="daynum">14</span></div><div class="pcal-day"><span class="daynum">15</span></div><div class="pcal-day"><span class="daynum">16</span><div class="cdots"><div class="cdot cdot-pink"></div><div class="cdot cdot-black"></div></div></div><div class="pcal-day"><span class="daynum">17</span></div><div class="pcal-day"><span class="daynum">18</span></div>
+          <div class="pcal-day"><span class="daynum">19</span></div><div class="pcal-day"><span class="daynum">20</span><div class="cdots"><div class="cdot cdot-interest"></div></div></div><div class="pcal-day"><span class="daynum">21</span><div class="cdots"><div class="cdot cdot-gray"></div></div></div><div class="pcal-day"><span class="daynum">22</span></div><div class="pcal-day"><span class="daynum">23</span></div><div class="pcal-day"><span class="daynum">24</span><div class="cdots"><div class="cdot cdot-black"></div></div></div><div class="pcal-day"><span class="daynum">25</span></div>
+          <div class="pcal-day"><span class="daynum">26</span></div><div class="pcal-day today"><span class="daynum">27</span><div class="cdots"><div class="cdot cdot-black"></div><div class="cdot cdot-pink"></div></div></div><div class="pcal-day"><span class="daynum">28</span><div class="cdots"><div class="cdot cdot-pink"></div></div></div><div class="pcal-day"><span class="daynum">29</span></div><div class="pcal-day"><span class="daynum">30</span></div><div class="pcal-day other"><span class="daynum">1</span></div><div class="pcal-day other"><span class="daynum">2</span></div>
+        </div>
+        <div class="pcal-legend">
+          <div class="cleg"><div class="cdot cdot-black" style="width:7px;height:7px;"></div> Ticket</div>
+          <div class="cleg"><div class="cdot cdot-pink" style="width:7px;height:7px;"></div> In lottery</div>
+          <div class="cleg"><div class="cdot cdot-interest" style="width:7px;height:7px;"></div> Interested</div>
+          <div class="cleg"><div class="cdot cdot-gray" style="width:7px;height:7px;"></div> Attended</div>
+        </div>
+        <div class="pcal-list">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray-400);padding:7px 0 4px;font-family:'Karla',sans-serif;">Apr 27 — Shows</div>
+          <div class="pcal-row">
+            <div class="pcal-dot-side cdot-black"></div>
+            <div class="pcal-date">7:30 PM</div>
+            <div class="pcal-ev-title">Ragtime</div>
+            <div class="pcal-tag" style="background:#e8f5e9;color:#2e7d32;">Tix ✓</div>
+          </div>
+          <div class="pcal-row">
+            <div class="pcal-dot-side cdot-pink"></div>
+            <div class="pcal-date">7:00 PM</div>
+            <div class="pcal-ev-title">Turandot</div>
+            <div class="pcal-tag ptag-lottery" style="font-size:8px;padding:2px 5px;border-radius:8px;">Lottery</div>
+          </div>
+          <div class="pcal-row">
+            <div class="pcal-dot-side" style="background:var(--gray-200);"></div>
+            <div class="pcal-date">8:00 PM</div>
+            <div class="pcal-ev-title">Ingrid Michaelson</div>
+            <div class="pcal-tag" style="font-size:8px;padding:2px 5px;border-radius:8px;color:var(--gray-400);">Available</div>
+          </div>
+        </div>
+        <div class="pnav">
+          <div class="pnav-item"><div class="pnav-icon">📅</div><div class="pnav-label">Upcoming</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">📆</div><div class="pnav-label">Calendar</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🎟</div><div class="pnav-label">My Tickets</div></div>
+          <div class="pnav-item"><div class="pnav-icon">👤</div><div class="pnav-label">Me</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-desc">
+      <h3>Calendar</h3>
+      <p>A full month view of Lincoln Center's programming, layered with the user's own relationship to each date. Dots encode status at a glance — no tapping required to know which days you're already committed to.</p>
+      <ul class="feature-list">
+        <li>Color-coded dots: black for purchased tickets, pink for active lottery entries, gray for past attended shows</li>
+        <li>Tap any date to see that day's full show list below the calendar grid, with status indicators inline</li>
+        <li>Helps users plan ahead — see where they already have commitments vs. open nights</li>
+        <li>Shows across all Lincoln Center venues appear in the same unified view</li>
+        <li>Month navigation with persistent bottom nav for quick switching between screens</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TICKETS -->
+  <div id="screen-tickets" class="screen-panel">
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+      <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+      <div class="phone-screen">
+        <div class="pheader" style="padding-bottom:10px;">
+          <div class="pheader-title">My Tickets</div>
+        </div>
+        <div class="ptix-tabs">
+          <div class="ptix-tab active">Upcoming</div>
+          <div class="ptix-tab">Lotteries</div>
+          <div class="ptix-tab">Past</div>
+        </div>
+        <div class="pbody">
+          <div class="ptix-card">
+            <div class="ptix-top">
+              <div class="ptix-info">
+                <div class="ptix-title">Ragtime</div>
+                <div class="ptix-date">Tonight · Apr 27 · 7:30 PM · Vivian Beaumont</div>
+                <div class="ptix-badges">
+                  <div class="ptix-status ptix-attending">✓ Confirmed</div>
+                  <div class="ptix-status" style="background:var(--pink-light);color:var(--pink);">2 seats</div>
+                </div>
+              </div>
+            </div>
+            <div class="ptix-qr-area">
+              <div class="ptix-qr">
+                <div class="qrb"></div><div class="qrb empty" style="border:1.5px solid var(--black);"></div>
+                <div class="qrb empty"></div><div class="qrb"></div>
+              </div>
+              <div class="ptix-actions">
+                <div class="ptix-btn ptix-btn-pink">Show ticket</div>
+                <div class="ptix-btn ptix-btn-ghost">Directions</div>
+                <div class="ptix-btn ptix-btn-ghost">Share ↗</div>
+              </div>
+            </div>
+          </div>
+          <div class="ptix-card">
+            <div class="ptix-top">
+              <div class="ptix-info">
+                <div class="ptix-title">Swan Lake — NYCB</div>
+                <div class="ptix-date">Jun 14 · 2:00 PM · David H. Koch Theater</div>
+                <div class="ptix-badges"><div class="ptix-status ptix-attending">✓ Confirmed</div></div>
+              </div>
+            </div>
+            <div class="ptix-qr-area" style="padding-top:0;">
+              <div class="ptix-actions">
+                <div class="ptix-btn ptix-btn-ghost" style="flex:2;">Add to calendar</div>
+                <div class="ptix-btn ptix-btn-ghost">Share ↗</div>
+              </div>
+            </div>
+          </div>
+          <div class="ptix-card" style="border-color:#ffd54f;">
+            <div class="ptix-top">
+              <div class="ptix-info">
+                <div class="ptix-title">Turandot</div>
+                <div class="ptix-date">Tonight · Apr 27 · 7:00 PM · Met Opera</div>
+                <div class="ptix-badges">
+                  <div class="ptix-status ptix-lottery">🎟 In lottery</div>
+                  <div class="ptix-status ptix-lottery">Closes 5 PM</div>
+                </div>
+              </div>
+            </div>
+            <div class="ptix-qr-area" style="padding-top:0;">
+              <div style="font-size:8.5px;color:var(--gray-600);font-family:'Karla',sans-serif;">2 friends also entered · Winners notified at 5 PM</div>
+            </div>
+          </div>
+          <div style="height:14px;"></div>
+        </div>
+        <div class="pnav">
+          <div class="pnav-item"><div class="pnav-icon">📅</div><div class="pnav-label">Upcoming</div></div>
+          <div class="pnav-item"><div class="pnav-icon">📆</div><div class="pnav-label">Calendar</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">🎟</div><div class="pnav-label">My Tickets</div></div>
+          <div class="pnav-item"><div class="pnav-icon">👤</div><div class="pnav-label">Me</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-desc">
+      <h3>My Tickets</h3>
+      <p>Everything in one place, organized by what you need to act on. Tonight's confirmed tickets are at the top. Active lotteries have visible countdowns. Past shows are archived for re-discovery and review.</p>
+      <ul class="feature-list">
+        <li>Three tabs: Upcoming (confirmed tickets), Lotteries (all available lotteries to enter, not just active ones), Past (attended shows)</li>
+        <li>Tonight's tickets always surface first, with a large QR code, directions shortcut, and share button</li>
+        <li>Lottery cards show countdown timer, friend count, and notification ETA — reducing anxiety around the wait</li>
+        <li>Share to Instagram Stories shortcut on the night of a performance</li>
+        <li>Past tab enables users to rate and reflect on shows, feeding the recommendation engine</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ME -->
+  <div id="screen-me" class="screen-panel">
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+      <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+      <div class="phone-screen">
+        <div class="pme-header">
+          <div class="pme-avatar">X</div>
+          <div>
+            <div class="pme-name">Xinru</div>
+            <div class="pme-member">Lincoln Center Member · Since 2024</div>
+          </div>
+        </div>
+        <div class="pbody">
+          <div class="pme-section">My Lincoln Center Bucket List</div>
+          <div style="background:white;margin:0 10px 8px;border-radius:10px;border:1px solid var(--gray-200);padding:10px 12px;">
+            <div style="font-size:8.5px;color:var(--gray-600);font-family:'Karla',sans-serif;margin-bottom:8px;">Have you seen a show at every LC organization?</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" checked style="accent-color:var(--pink);width:13px;height:13px;"> New York Philharmonic</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" checked style="accent-color:var(--pink);width:13px;height:13px;"> Metropolitan Opera</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> NY City Ballet</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" checked style="accent-color:var(--pink);width:13px;height:13px;"> Jazz at Lincoln Center</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> Lincoln Center Theater</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> Film at Lincoln Center</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> Chamber Music Society</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> School of American Ballet</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Karla',sans-serif;font-size:10px;color:var(--black);"><input type="checkbox" style="accent-color:var(--pink);width:13px;height:13px;"> The Juilliard School</label>
+            </div>
+            <div style="margin-top:8px;padding-top:7px;border-top:1px solid var(--gray-200);display:flex;align-items:center;gap:8px;">
+              <span style="font-size:9px;color:var(--gray-600);font-family:'Karla',sans-serif;white-space:nowrap;">3 of 9 complete</span>
+              <div style="height:5px;background:var(--gray-200);border-radius:3px;flex:1;"><div style="height:5px;background:var(--pink);border-radius:3px;width:33%;"></div></div>
+            </div>
+          </div>
+          <div class="pme-section">My Programs</div>
+          <div class="programs-grid">
+            <div class="prog-card active"><div class="prog-card-title">Under 30s</div><div class="prog-card-sub">Age verified ✓</div></div>
+            <div class="prog-card inactive"><div class="prog-card-title">Under 40s</div><div class="prog-card-sub">Verify to unlock</div></div>
+            <div class="prog-card inactive"><div class="prog-card-title">LC Gala</div><div class="prog-card-sub">Members only</div></div>
+            <div class="prog-card inactive"><div class="prog-card-title">Young Patrons</div><div class="prog-card-sub">Join program</div></div>
+          </div>
+          <div class="pme-section">Account</div>
+          <div class="pme-row"><div class="pme-label">Email</div><div class="pme-val">xinru@email.com ›</div></div>
+          <div class="pme-row"><div class="pme-label">Age verification</div><div class="pme-val"><div class="pme-badge pme-verified">Verified</div></div></div>
+          <div class="pme-row"><div class="pme-label">Date of birth</div><div class="pme-val">On file ›</div></div>
+          <div class="pme-section">Payment</div>
+          <div class="pme-row"><div class="pme-label">Card on file</div><div class="pme-val">Visa ···· 4821 ›</div></div>
+          <div class="pme-row"><div class="pme-label">Apple Pay</div><div class="pme-val"><div class="pme-badge pme-verified">Enabled</div></div></div>
+          <div class="pme-section">Preferences</div>
+          <div class="pme-row"><div class="pme-label">Interests</div><div class="pme-val">Opera, Dance ›</div></div>
+          <div class="pme-row"><div class="pme-label">Price range</div><div class="pme-val">$0–$75 ›</div></div>
+          <div class="pme-row"><div class="pme-label">Friends</div><div class="pme-val">8 connected ›</div></div>
+          <div style="height:14px;"></div>
+        </div>
+        <div class="pnav">
+          <div class="pnav-item"><div class="pnav-icon">📅</div><div class="pnav-label">Upcoming</div></div>
+          <div class="pnav-item"><div class="pnav-icon">📆</div><div class="pnav-label">Calendar</div></div>
+          <div class="pnav-item"><div class="pnav-icon">🎟</div><div class="pnav-label">My Tickets</div></div>
+          <div class="pnav-item active"><div class="pnav-icon">👤</div><div class="pnav-label">Me</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-desc">
+      <h3>Me</h3>
+      <p>Profile, programs, and preferences — all in one place. The programs grid gives users a clear view of what age-gated experiences they qualify for, what they're enrolled in, and what they're missing. Age verification unlocks access without friction.</p>
+      <ul class="feature-list">
+        <li><strong>Lincoln Center Bucket List</strong> — a checklist of all nine LC organizations (Philharmonic, Met Opera, NYCB, Jazz at Lincoln Center, LC Theater, Film at LC, Chamber Music Society, School of American Ballet, Juilliard). A progress bar tracks completion. Turns cultural exploration into a satisfying personal goal</li>
+        <li>Programs grid surfaces Under 30s, Under 40s, LC Gala, and Young Patrons with clear active/locked/available states</li>
+        <li>Age verification stored once, used everywhere — unlocks relevant programs automatically</li>
+        <li>Card on file and Apple Pay configured here for seamless in-app ticket purchase and lottery wins</li>
+        <li>Interest and price range preferences feed the personalization engine on the Upcoming screen</li>
+        <li>Friends section shows connected accounts for the social lottery mechanic</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--gray-100); padding: 80px 40px; margin-top: 0;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="section-label">Strategic Priorities</div>
+  <h2>Two things have to be true at launch.</h2>
+  <p class="lead" style="margin-bottom:40px;">The MVP doesn't need to do everything. It needs to do two things exceptionally well.</p>
+  <div class="priority-grid">
+    <div class="priority-card">
+      <div class="priority-num">01</div>
+      <h3>Speed above everything</h3>
+      <p>The app has to be the fastest way to answer "what's on tonight at Lincoln Center?" — faster than Google, faster than the website, faster than calling the box office. If it takes more than two minutes to go from opening the app to having a ticket or lottery entry, we've failed the primary use case.</p>
+    </div>
+    <div class="priority-card">
+      <div class="priority-num">02</div>
+      <h3>Social is the acquisition engine</h3>
+      <p>The lottery mechanic is only as powerful as its social layer. When two friends enter the same lottery, they should know — and they should be matched together if they win. The moment "I won, and Sofia won too" becomes a thing people text each other, the app starts growing itself. That's the flywheel.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2>Let's build this.</h2>
+  <p>This is a speculative concept, but the problem is real. If you're working on Lincoln Center's digital experience — or something like it — I'd love to be involved.</p>
+  <div class="cta-buttons">
+    <a href="mailto:xinruli2011@gmail.com" class="btn-cta btn-cta-pink">Get in touch</a>
+    <a href="javascript:void(0)" onclick="navScrollTo('screens')" class="btn-cta btn-cta-ghost">Back to screens ↑</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">Lincoln Center App — Product Case Study · 2026</div>
+  <div class="footer-right">Speculative concept</div>
+</footer>
+
+<script>
+  function navScrollTo(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var top = el.getBoundingClientRect().top + (document.documentElement.scrollTop || document.body.scrollTop) - 56;
+    try {
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    } catch(e) {
+      document.documentElement.scrollTop = top;
+      document.body.scrollTop = top;
+    }
+  }
+  function showScreen(name) {
+    document.querySelectorAll('.screen-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    const panel = document.getElementById('screen-' + name);
+    if (panel) panel.classList.add('active');
+    const labelMap = { upcoming: 'upcoming', calendar: 'calendar', tickets: 'my tickets', me: 'me' };
+    const targetLabel = labelMap[name] || name;
+    document.querySelectorAll('.screen-tab').forEach(t => {
+      if (t.textContent.trim().toLowerCase() === targetLabel) t.classList.add('active');
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wire top tabs
+    document.querySelectorAll('.screen-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        const map = { 'upcoming': 'upcoming', 'calendar': 'calendar', 'my tickets': 'tickets', 'me': 'me' };
+        const target = map[tab.textContent.trim().toLowerCase()];
+        if (target) showScreen(target);
+      });
+    });
+    // Wire in-phone bottom nav items across ALL panels
+    document.querySelectorAll('.pnav-item').forEach(function(item) {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', function() {
+        const label = item.querySelector('.pnav-label');
+        if (!label) return;
+        const map = { 'upcoming': 'upcoming', 'calendar': 'calendar', 'my tickets': 'tickets', 'me': 'me' };
+        const target = map[label.textContent.trim().toLowerCase()];
+        if (target) showScreen(target);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
